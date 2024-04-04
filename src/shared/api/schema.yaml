@@ -1,0 +1,431 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetHelloDto"
+  /auth/sign-up:
+    post:
+      operationId: AuthController_signUp
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpBodyDto"
+      responses:
+        "201":
+          description: ""
+  /auth/sign-in:
+    post:
+      operationId: AuthController_signIn
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignInBodyDto"
+      responses:
+        "200":
+          description: ""
+  /auth/sign-out:
+    post:
+      operationId: AuthController_signOut
+      parameters: []
+      responses:
+        "200":
+          description: ""
+  /auth/session-info:
+    get:
+      operationId: AuthController_getSessionInfo
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetSessionInfoDto"
+  /items/get-items:
+    get:
+      operationId: ItemsController_getItems
+      parameters:
+        - name: q
+          required: false
+          in: query
+          schema:
+            type: string
+        - name: qu
+          required: false
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetItemDto"
+  /items/create-item:
+    post:
+      operationId: ItemsController_addItem
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/AddItemDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddItemDto"
+  /items/update-item/{id}:
+    put:
+      operationId: ItemsController_patchItem
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/patchItemDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/patchItemDto"
+  /items/delete-item/{id}:
+    delete:
+      operationId: ItemsController_removeItem
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetItemDto"
+  /cart/get-all-items:
+    get:
+      operationId: CartController_getAllCartItems
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartItemDto"
+  /cart/get-item:
+    get:
+      operationId: CartController_getCartItem
+      parameters:
+        - name: q
+          required: false
+          in: query
+          schema:
+            type: string
+        - name: qu
+          required: false
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartItemDto"
+  /cart/create-item/{id}:
+    post:
+      operationId: CartController_addCartItem
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddCartItemDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartItemDto"
+  /cart/update-finish-block/{id}:
+    put:
+      operationId: CartController_patchCartItem
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchCartItemDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartItemDto"
+  /cart/remove-item/{id}:
+    delete:
+      operationId: CartController_removeCartItem
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartItemDto"
+info:
+  title: FlewBye
+  description: ""
+  version: 1.0.0
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    GetHelloDto:
+      type: object
+      properties:
+        message:
+          type: string
+          example: This is the message!
+      required:
+        - message
+    SignUpBodyDto:
+      type: object
+      properties:
+        email:
+          type: string
+          example: example@gmail.com
+        password:
+          type: string
+          example: "12345678"
+      required:
+        - email
+        - password
+    SignInBodyDto:
+      type: object
+      properties:
+        email:
+          type: string
+          example: example@gmail.com
+        password:
+          type: string
+          example: "12345678"
+      required:
+        - email
+        - password
+    GetSessionInfoDto:
+      type: object
+      properties:
+        id:
+          type: number
+        email:
+          type: string
+        iat:
+          type: number
+        exp:
+          type: number
+      required:
+        - id
+        - email
+        - iat
+        - exp
+    CartItemDto:
+      type: object
+      properties:
+        id:
+          type: number
+        ownerId:
+          type: number
+        tel:
+          type: string
+        count:
+          type: number
+        mail:
+          type: string
+        isFinished:
+          type: boolean
+        item:
+          type: array
+          items:
+            $ref: "#/components/schemas/GetItemDto"
+        createdAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - ownerId
+        - tel
+        - count
+        - mail
+        - isFinished
+        - item
+        - createdAt
+    GetItemDto:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        img:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        price:
+          type: number
+        type:
+          type: string
+          enum:
+            - Gel
+            - Gift
+            - Soap
+        createdAt:
+          format: date-time
+          type: string
+        cart:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartItemDto"
+      required:
+        - id
+        - name
+        - img
+        - description
+        - price
+        - type
+        - createdAt
+        - cart
+    AddItemDto:
+      type: object
+      properties:
+        name:
+          type: string
+        img:
+          type: array
+          items:
+            type: string
+            format: binary
+        description:
+          type: string
+        price:
+          type: number
+        type:
+          type: string
+          enum:
+            - Gel
+            - Gift
+            - Soap
+        createdAt:
+          type: string
+          default: 2024-04-04T10:48:07.373Z
+      required:
+        - name
+        - img
+        - description
+        - price
+        - type
+        - createdAt
+    patchItemDto:
+      type: object
+      properties:
+        name:
+          type: string
+        img:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        price:
+          type: number
+        type:
+          type: string
+          enum:
+            - Gel
+            - Gift
+            - Soap
+        createdAt:
+          format: date-time
+          type: string
+      required:
+        - name
+        - img
+        - description
+        - price
+        - type
+        - createdAt
+    AddCartItemDto:
+      type: object
+      properties:
+        tel:
+          type: string
+        count:
+          type: number
+        mail:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+        - tel
+        - count
+        - mail
+        - createdAt
+    PatchCartItemDto:
+      type: object
+      properties:
+        isFinished:
+          type: boolean
