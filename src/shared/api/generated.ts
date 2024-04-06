@@ -40,7 +40,7 @@ export const PatchItemDtoType = {
 export interface PatchItemDto {
   createdAt: string;
   description: string;
-  img: string[];
+  img: Blob[];
   name: string;
   price: number;
   type: PatchItemDtoType;
@@ -212,12 +212,20 @@ export const itemsControllerPatchItem = (
   patchItemDto: BodyType<PatchItemDto>,
   options?: SecondParameter<typeof createInstance>,
 ) => {
+  const formData = new FormData();
+  formData.append("name", patchItemDto.name);
+  patchItemDto.img.forEach((value) => formData.append("img", value));
+  formData.append("description", patchItemDto.description);
+  formData.append("price", patchItemDto.price.toString());
+  formData.append("type", patchItemDto.type);
+  formData.append("createdAt", patchItemDto.createdAt);
+
   return createInstance<PatchItemDto>(
     {
       url: `/items/update-item/${id}`,
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      data: patchItemDto,
+      headers: { "Content-Type": "multipart/form-data" },
+      data: formData,
     },
     options,
   );

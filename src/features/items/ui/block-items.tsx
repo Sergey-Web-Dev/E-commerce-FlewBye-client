@@ -73,7 +73,7 @@ const BlockItems: FC<BlockItems> = ({
         <img
           src={img[0]}
           alt="photo_product.png"
-          className="w-[100%] h-[100%] object-cover"
+          className="[width:30vw] [height:20vw] object-cover"
         />
       </div>
       <div>

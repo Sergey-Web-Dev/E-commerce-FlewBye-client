@@ -23,7 +23,7 @@ export function useAddItemQuery() {
 
   return useMutation({
     //@ts-ignore
-    mutationFn: itemsControllerAddItem,
+    mutationFn: ({ data }) => itemsControllerAddItem(data),
     async onSuccess(data) {
       queryClient.setQueryData(itemsKey, data);
     },
@@ -34,12 +34,12 @@ export function useAddItemQuery() {
   });
 }
 
-export function usePatchItemQuery({ id }: { id: number }) {
+export function usePatchItemQuery() {
   const queryClient = useQueryClient();
 
   return useMutation({
     //@ts-ignore
-    mutationFn: () => itemsControllerPatchItem(id),
+    mutationFn: ({ id, data }) => itemsControllerPatchItem(id, data),
     onSuccess(data) {
       queryClient.setQueryData(itemsKey, data);
     },

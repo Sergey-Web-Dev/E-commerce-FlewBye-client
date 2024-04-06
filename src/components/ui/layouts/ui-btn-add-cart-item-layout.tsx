@@ -13,14 +13,11 @@ import {
 import { useAddCartItems } from "@/features/cart/model/use-add-cart-items";
 import TextField from "@/shared/ui/text-field";
 import SelectField from "@/shared/ui/select-field";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const UiBtnAddCartItemLayout = ({ id }: { id: number }) => {
   const { setId, register, handleSubmit, isLoading, errorMsg } =
     useAddCartItems();
-
-  const router = useRouter();
 
   const [skipCount, setSkipCount] = useState(true);
 

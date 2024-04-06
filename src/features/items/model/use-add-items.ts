@@ -24,13 +24,15 @@ export function useAddItems() {
       const { img, name, price, description, type } = data;
 
       addItems.mutate(
+        //@ts-ignore
         {
-          //@ts-ignore
-          img: Array.isArray(img) ? img : Object.values(img),
-          name,
-          price: typeof price === "number" ? price : +price,
-          description,
-          type,
+          data: {
+            img: Array.isArray(img) ? img : Object.values(img),
+            name,
+            price: typeof price === "number" ? price : +price,
+            description,
+            type,
+          },
         },
         {
           onSuccess() {
@@ -38,6 +40,7 @@ export function useAddItems() {
           },
         },
       );
+      console.log(addItems.error);
     }),
     register,
     errorMsg,

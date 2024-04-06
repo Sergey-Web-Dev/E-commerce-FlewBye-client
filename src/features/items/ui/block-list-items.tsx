@@ -51,7 +51,7 @@ export const BlockListItems = ({ className }: { className?: string }) => {
 
       <hr />
 
-      <div className="rounded-xl bg-slate-100/50 px-5 py-4 flex justify-between items-center gap-3 flex-wrap">
+      <div className="rounded-xl bg-slate-100/50 px-5 py-4 flex justify-center items-center gap-20 flex-wrap">
         {isLoader && <Spinner className="text-teal-600 w-8 h-8 mx-auto" />}
         {isEmptyText && (
           <div className="text-sm py-1 text-slate-500 text-center">

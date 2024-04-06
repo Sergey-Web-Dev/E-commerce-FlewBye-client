@@ -105,7 +105,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: "#/components/schemas/patchItemDto"
       responses:
@@ -370,7 +370,7 @@ components:
             - Soap
         createdAt:
           type: string
-          default: 2024-04-04T10:48:07.373Z
+          default: 2024-04-06T13:20:57.872Z
       required:
         - name
         - img
@@ -387,6 +387,7 @@ components:
           type: array
           items:
             type: string
+            format: binary
         description:
           type: string
         price:
@@ -398,8 +399,8 @@ components:
             - Gift
             - Soap
         createdAt:
-          format: date-time
           type: string
+          default: 2024-04-06T13:20:57.872Z
       required:
         - name
         - img

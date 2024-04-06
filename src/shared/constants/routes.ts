@@ -5,4 +5,6 @@ export const ROUTES = {
   ACCOUNT: "/account",
   SOAP: "/soap",
   ADMIN: "/admin",
+  ITEMS: "/admin-items",
+  ORDERS: "/admin-orders",
 };

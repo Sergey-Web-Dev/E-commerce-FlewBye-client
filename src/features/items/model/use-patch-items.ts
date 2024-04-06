@@ -1,6 +1,6 @@
 import { usePatchItemQuery } from "@/entities/items";
 import { PatchItemDtoType } from "@/shared/api/generated";
-import { useId, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export function usePatchItems() {
@@ -15,23 +15,43 @@ export function usePatchItems() {
       type: PatchItemDtoType.Soap,
     },
   });
-
   const [id, setId] = useState(0);
 
-  const patchItems = usePatchItemQuery({ id });
+  const patchItems = usePatchItemQuery();
+  const errorMsgPatchItem = patchItems.error
+    ? "Something went wrong"
+    : undefined;
 
   return {
     isLoading: patchItems.isPending,
     handleSubmit: handleSubmit((data) => {
-      //@ts-ignore
-      patchItems.mutate(data, {
-        onSuccess() {
-          reset();
+      const { img, name, price, description, type } = data;
+
+      patchItems.mutate(
+        //@ts-ignore
+        {
+          id: id,
+          data: {
+            img: Array.isArray(img) ? img : Object.values(img),
+            name,
+            price: typeof price === "number" ? price : +price,
+            description,
+            type,
+          },
         },
-      });
+        {
+          onSuccess() {
+            reset();
+          },
+        },
+      );
+      console.log(patchItems.error);
+      console.log(data.img);
     }),
     register,
     setId,
     id,
+    errorMsgPatchItem,
+    isSuccess: patchItems.isSuccess,
   };
 }
